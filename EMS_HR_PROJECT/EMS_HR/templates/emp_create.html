@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %} Admin Dashboard {% endblock %}
+
+{% block body %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style2.css' %}">
+
+<main class="main-container">
+        <div class="box">
+
+            {% if messages %}
+            {% for message in messages %}
+        <div class="alert {{ message.tags }} ">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <div classs="alert-text">{{ message }}</div>
+          </div>
+        {% endfor %}
+        {% endif %}
+
+            <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+                <div class="title">
+                    <h2>Employee Add</h2>
+                </div>
+                <div id="select-box">
+                    <div class="select-box">
+                        <select name="employee" >
+                            {% for c in user %}
+                                <option value="{{c.id}}">
+                                    {{c.username}}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="input-box">
+                    <input type="number" placeholder="Mobile Number" name="phone" required>
+                </div>
+                <div class="input-box">
+                    <input type="text" placeholder="Salary" name="salary" required>
+                </div>
+                <div id="select-box">
+                <div class="select-box">
+                    <select name="gender" >
+                        {% for c in gender %}
+                            <option value="{{c.id}}">{{c.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                </div>
+                <div id="select-box">
+                <div class="select-box">
+                    <select name="position" >
+                        {% for c in position %}
+                            <option value="{{c.id}}">{{c.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                </div>
+                <div class="input-box">
+                    <input type="file" name="image" required>
+                </div>
+                {% comment %}
+                <div class="input-box">
+                    <input type="datetime-local" name="create_at" required>
+                </div>
+                {% endcomment %}
+                <div class="but">
+                    <button type="submit" class="btn">Employ</button>
+                </div>
+            </form>
+        </div>
+</main>
+
+{% endblock %}

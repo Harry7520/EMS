@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %} Admin Dashboard {% endblock %}
+
+{% block body %}
+
+{% load static %}
+<link rel="stylesheet" href="{%static 'css/style4.css'%}">
+
+<div class="main-container">
+    <div class="box">
+        <div class="box-detail">
+            <div class="detail">
+                <label>EMP-ID</label>
+                <p>{{leave.empid}}</p>
+            </div>
+            <div class="detail">
+                <label>Name</label>
+                <p>{{leave.name}}</p>
+            </div>
+            <div class="detail">
+                <label>Reason</label>
+                <p>{{leave.description}}</p>
+            </div>
+            <div class="detail">
+                <label>Position</label>
+                <p>{{leave.start_date}}</p>
+            </div>
+            <div class="detail">
+                <label>Position</label>
+                <p>{{leave.end_date}}</p>
+            </div>
+            <div class="detail">
+                <label>Report-Date</label>
+                <p>{{leave.create_at}}</p>
+            </div>
+            <div class="button">
+                <a href="/ems/leave/view"><button>Cancel</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

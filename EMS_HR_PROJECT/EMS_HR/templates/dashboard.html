@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block title %} Admin Dashboard {% endblock %}
+
+{% block body %}
+
+<!-- Main -->
+<main class="main-container">
+    {% if messages %}
+    {% for message in messages %}
+<div class="alert {{ message.tags }} ">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+    <div classs="alert-text">{{ message }}</div>
+  </div>
+{% endfor %}
+{% endif %}
+
+    <div class="main-cards">
+        
+            {% if empdetail.position.name == "Admin" %}
+            <div class="card">
+                <div class="card-inner">
+                    <h3>Employee</h3>
+                    <span class="material-icons-outlined">people</span>
+                </div>
+                <h1>{{empcreates.count}}</h1>
+            </div>
+            {% elif empdetail.position.name == "Manager" %}
+            <div class="card">
+                <div class="card-inner">
+                    <h3>Employee</h3>
+                    <span class="material-icons-outlined">people</span>
+                </div>
+                <h1>{{empcreates.count}}</h1>
+            </div>
+            {% elif empdetail.position.name == "Project Manager" %}
+            <div class="card">
+                <div class="card-inner">
+                    <h3>Employee</h3>
+                    <span class="material-icons-outlined">people</span>
+                </div>
+                <h1>{{empcreates.count}}</h1>
+            </div>
+            {% endif %}
+
+            {% if empdetail.position.name == "Admin" %}
+            <div class="card">
+                <div class="card-inner">
+                    <h3>Project</h3>
+                    <span class="material-icons-outlined">assignment</span>
+                </div>
+                <h1>{{project.count}}</h1>
+            </div>
+            {% elif empdetail.position.name == "Manager" %}
+            <div class="card">
+                <div class="card-inner">
+                    <h3>Project</h3>
+                    <span class="material-icons-outlined">assignment</span>
+                </div>
+                <h1>{{project.count}}</h1>
+            </div>
+            {% elif empdetail.position.name == "Project Manager" %}
+            <div class="card">
+                <div class="card-inner">
+                    <h3>Project</h3>
+                    <span class="material-icons-outlined">assignment</span>
+                </div>
+                <h1>{{project.count}}</h1>
+            </div>
+            {% elif empdetail.position.name == "Developer" %}
+            <div class="card">
+                <div class="card-inner">
+                    <h3>Project</h3>
+                    <span class="material-icons-outlined">assignment</span>
+                </div>
+                <h1>{{project.count}}</h1>
+            </div>
+            {% endif %}
+
+            {% if empdetail.position.name == "Admin" %}
+            <div class="card">
+                <div class="card-inner">
+                    <h3>Resignation</h3>
+                    <span class="material-icons-outlined">group_off</span>
+                </div>
+                <h1>{{res.count}}</h1>
+            </div>
+
+            <div class="card">
+                <div class="card-inner">
+                    <h3>Leave</h3>
+                    <span class="material-icons-outlined">how_to_vote</span>
+                </div>
+                <h1>{{leave.count}}</h1>
+            </div>
+            {% endif %}
+    </div>
+
+    {% if empdetail.position.name == "Admin" %}
+    {% elif empdetail.position.name == "Manager" %}
+    {% elif empdetail.position.name == "Project Manager" %}
+    {% elif empdetail.position.name == "Developer" %}
+    {% else %}
+    <div class="aaa">
+        <div class="bbb">
+            <center>
+                <h1>Note!</h1>
+            </center><br><hr><br>
+            <font size="5">
+                <i>
+                    <p>Dear User:<br><br>
+                        Need! Admin or Manager gives your-position in Employee List.<br>
+                        If you create new superuser,you can give position in admin-pannel<br><br>
+                        Create new superuser > localhost:8000/admin login > empcreateModel > add new and create your details
+                    </p>
+                </i>
+            </font>
+            <center>
+        </div>
+    </div>
+    {% endif %}
+
+  </main>
+  <!-- End Main -->
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %} Admin Dashboard {% endblock %}
+
+{% block body %}
+
+{% load static%}
+<link rel="stylesheet" href="{% static 'css/style3.css' %}">
+<link rel="stylesheet" href="{% static 'css/style5.css' %}">
+
+<!-- Main -->
+<main class="main-container">
+<div class="mail-box">
+    <div class="mail">
+        <header>
+            <h2>Mail</h2>
+        </header>
+        <ul class="chatbox">
+            {% for a in mail%}
+            {% if a.author_id == user.id %}
+            <li class="chat outgoing">
+                <p><font color="#ccc" size="5px" face="bold">{{a.author.username}}/{{a.create_at}}</font><br><br>{{a.content}}<br><br><a href="/ems/mail/delete/{{a.id}}/" style="text-decoration: none;color:red;font-family:bold;font-size:20px;">delete</a></p>
+            </li>
+            {% else %}
+            <li class="chat incomming">
+                <p><font color="#000" size="5px" face="bold">{{a.author.username}}/{{a.create_at}}</font><br><br>{{a.content}}</p>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+        <form class="chat-input" action="/ems/mail/" method="POST">
+            {% csrf_token %}
+            <textarea placeholder="Message" name="content" required></textarea>
+            <div>
+                <button type="submit" class="add-new">Send</button>
+            </div>
+        </form>
+    </div>
+</div>
+</main>
+  <!-- End Main -->
+{% endblock %}

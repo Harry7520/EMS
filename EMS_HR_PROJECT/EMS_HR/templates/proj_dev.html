@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %} Admin Dashboard {% endblock %}
+
+{% block body %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style7.css' %}">
+<link rel="stylesheet" href="{% static 'css/style3.css' %}">
+<link rel="stylesheet" href="{% static 'css/paginator.css' %}">
+
+<main class="main-container">
+    <div class="border-box">
+        <div class="create-item">
+            <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+                <div class="title">
+                    <h2>New Progress</h2>
+                </div>
+                <div class="input-box">
+                    <input type="text" placeholder="Division" name="division" required>
+                </div>
+                <div class="input-box">
+                    <input type="text" placeholder="Progress" name="progress" required>
+                </div>
+                <div class="input-box">
+                    <input type="file" name="image" required>
+                </div>
+                <div class="but">
+                    <button type="submit" class="btn1">Save</button>
+                </div>
+            </form>
+            <div class="but">
+                <a href="/ems/proj/view"><button class="btn1">Cancel</button></a>
+            </div>
+        </div>
+        <div class="table-item">
+            {% if messages %}
+            {% for message in messages %}
+        <div class="alert {{ message.tags }} ">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <div classs="alert-text">{{ message }}</div>
+          </div>
+        {% endfor %}
+        {% endif %}
+        
+                {% if update %}
+                <table class="table">
+                    <thead>
+                        <th>Image</th>
+                        <th>Division</th>
+                        <th>Progress</th>
+                        <th>Update-Date</th>
+                        <th>Action</th>    
+                    </thead>
+                    {% for i in update %}
+                    <tbody>
+                        <tr>
+                            <td data-label="Photo">
+                                {% if i.image %}
+                                <img src={{i.image.url}} style="height: 60px;width: 60px;border-radius: 15px;border: 5px solid #ced0d2;"/>
+                                {% endif %}
+                            </td>
+                            <td data-label="Division">{{i.division}}</td>
+                            <td data-label="Progress">{{i.progress}}</td>
+                            <td data-label="Update-Date">{{i.create_at}}</td>
+                            <td data-label="Action">
+                                {% if i.author_id == user.id %}
+                                <a href="/ems/proj/edit/{{project.id}}/{{i.id}}"><button style="background-color:#0298cf"><i class="fa fa-edit"></i></button></a>
+                                <a href="/ems/proj/delete/{{project.id}}/{{i.id}}" onclick="return confirm('Are you sure?');"><button style="background-color:#f80000;"><i class="fa fa-trash-o"></i></button></a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                    {% else %}
+                            <font align="center"><h3>Nothing to show!</h3></font>
+                    {% endif %}
+                </table>
+
+                {% if update.has_other_pages %}
+                <h3>{{ update }}</h3>
+<div class="box1">
+<div class="pagination">
+    <ul>
+        {% if update.has_previous %}
+        <li class="btn prev"><a class="tag" href="?page={{ update.previous_page_number }}"><span><i class="fa fa-angle-left">Previous</i></span></a></li>
+        {% else %}
+        <li class="btn prev disabled"><span><i class="fa fa-angle-left">Previous</i></span></li>
+        {% endif %}
+{% if update.has_next %}
+        <li class="btn next"><a class="tag" href="?page={{ update.next_page_number }}"><span>Next<i class="fa fa-angle-right"></i></span></a></li>
+        {% else %}
+        <li class="btn next disabled"><span>Next<i class="fa fa-angle-right"></i></span></li>
+        {% endif %}
+    </ul>
+</div>
+</div>
+{% endif %}
+            </div>
+        </div>
+</main>
+
+{% endblock %}

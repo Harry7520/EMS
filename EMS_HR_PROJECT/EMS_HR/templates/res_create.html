@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %} Admin Dashboard {% endblock %}
+
+{% block body %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style2.css' %}">
+<link rel="stylesheet" href="{% static 'css/style6.css' %}">
+
+<main class="main-container">
+        <div class="box">
+
+            {% if messages %}
+            {% for message in messages %}
+        <div class="alert {{ message.tags }} ">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <div classs="alert-text">{{ message }}</div>
+          </div>
+        {% endfor %}
+        {% endif %}
+
+            <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+                <div class="title">
+                    <h2>Resignation Report</h2>
+                </div>
+                <div class="input-box">
+                    <input type="number" placeholder="ID" name="empid" required>
+                </div>
+                <div class="input-box">
+                    <input type="text" placeholder="name" name="name" required>
+                </div>
+                <div id="select-box">
+                    <div class="select-box">
+                        <select name="position" >
+                            {% for c in position %}
+                                <option value="{{c.id}}">{{c.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="input-box">
+                    <textarea type="text" placeholder="Reason" name="description" required style="resize:none;width:60%;height:150px;outline:none;font-size:0.95rem;"></textarea>
+                </div>
+                <div class="but">
+                    <button type="submit" class="btn">Report</button>
+                </div>
+            </form>
+        </div><br><br>
+
+        <div class="box2" id="res">
+            <div class="table-header">
+                <p>Your Resignation-Report List</p>
+            </div>
+            
+            <table class="table">
+                <thead>
+                    <th>EMP-ID</th>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Reason</th>
+                    <th>Action</th>    
+                </thead>
+                {% for i in res %}
+                {% if i.author_id == user.id %}
+                <tbody>
+                    <tr>
+                        <td data-label="EMP-ID">{{i.empid}}</td>
+                        <td data-label="Name">{{i.name}}</td>
+                        <td data-label="Position">{{i.position.name}}</td>
+                        <td data-label="Reason">{{i.description}}</td>
+                        {% if i.status == "pending" %}
+                        <td data-label="Action" style="background-color: #17a2b8;"><font color="#fff">{{i.status}}</font></td>
+                        {% elif i.status == "approve" %}
+                        <td data-label="Action" style="background-color: green;"><font color="#fff">{{i.status}}</font></td>
+                        {% elif i.status == "reject" %}
+                        <td data-label="Action" style="background-color: red;"><font color="#fff">{{i.status}}</font></td>
+                        {% endif %} 
+                    </tr>
+                </tbody>
+                {% endif %}
+                {% endfor %}
+                
+            </table>            
+        </div>
+</main>
+
+{% endblock %}

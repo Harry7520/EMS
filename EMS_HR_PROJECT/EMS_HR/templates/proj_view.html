@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %} Admin Dashboard {% endblock %}
+
+{% block body %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style3.css' %}">
+<link rel="stylesheet" href="{% static 'css/paginator.css' %}">
+
+<main class="main-container">
+        <div class="box">
+
+            {% if messages %}
+            {% for message in messages %}
+        <div class="alert {{ message.tags }} ">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <div classs="alert-text">{{ message }}</div>
+          </div>
+        {% endfor %}
+        {% endif %}
+                <div class="table-header">
+                    <p>Project List</p>
+                    <form action="/ems/search_by3">
+                        <input type="search" name="search" placeholder="Title search" style="height:35px;width:200px;">
+                        <button class="add-new" type="submit">search</button>
+                    </form>
+                    {% if empdetail.position.name == "Admin" %}
+                        <a href="/ems/proj/create"><button class="add-new">Add New</button></a>
+                        {% elif empdetail.position.name == "Project Manager" %}
+                        <a href="/ems/proj/create"><button class="add-new">Add New</button></a>
+                        {% endif %}
+                </div>
+                {% if project %}
+                <table class="table">
+                    <thead>
+                        <th>Proj-ID</th>
+                        <th>Title</th>
+                        <th>Proj-Partner</th>
+                        <th>Deadline</th>
+                        <th>Status</th>
+                        <th>Action</th>    
+                    </thead>
+                    {% for i in project %}
+                    <tbody>
+                        <tr>
+                            <td data-label="Proj-ID">{{i.id}}</td>
+                            <td data-label="Title">{{i.title}}</td>
+                            <td data-label="Proj-Partner">{{i.partner}}</td>
+                            <td data-label="Deadline">{{i.deadline}}</td>
+                            {% if i.status == "on-going" %}
+                            <td data-label="Action" style="background-color: #17a2b8;"><font color="#fff">{{i.status}}</font></td>
+                            {% elif i.status == "finished" %}
+                            <td data-label="Action" style="background-color: green;"><font color="#fff">{{i.status}}</font></td>
+                            {% endif %}
+                            
+                            {% if empdetail.position.name == "Admin" %}
+                            <td data-label="Action">
+                                <a href="/ems/proj/detail/{{i.id}}/"><button style="background-color:rgb(86, 168, 168)"><i class="fa fa-eye"></i></button></a>
+                                <a href="/ems/proj/dev/create/{{i.id}}/"><button style="background-color:#0298cf"><i class="fa fa-file-code-o"></i></button></a>
+                                <a href="/ems/Proj/delete/{{i.id}}/" onclick="return confirm('Are you sure?');"><button style="background-color:#f80000;"><i class="fa fa-trash-o"></i></button></a>
+                            </td>
+                            {% elif empdetail.position.name == "Project Manager" %}
+                            <td data-label="Action">
+                                <a href="/ems/proj/detail/{{i.id}}/"><button style="background-color:rgb(86, 168, 168)"><i class="fa fa-eye"></i></button></a>
+                                <a href="/ems/proj/dev/create/{{i.id}}/"><button style="background-color:#0298cf"><i class="fa fa-file-code-o"></i></button></a>
+                                <a href="/ems/Proj/delete/{{i.id}}/" onclick="return confirm('Are you sure?');"><button style="background-color:#f80000;"><i class="fa fa-trash-o"></i></button></a>
+                            </td>
+                            {% elif empdetail.position.name == "Developer" %}
+                            <td data-label="Action">
+                                <a href="/ems/proj/dev/create/{{i.id}}/"><button style="background-color:#0298cf"><i class="fa fa-file-code-o"></i></button></a>
+                            </td>
+                            {% elif empdetail.position.name == "Manager" %}
+                            <td data-label="Action">
+                                <a href="/ems/proj/detail/{{i.id}}/"><button style="background-color:rgb(86, 168, 168)"><i class="fa fa-eye"></i></button></a>
+                            </td>
+                            {% endif %}
+                            {% if i.status == "on-going" %}
+                            {% if empdetail.position.name == "Admin" %}
+                            <td data-label="Finished">
+                                <a href="/ems/proj/finish/{{i.id}}/" onclick="return confirm('Are you sure?');"><button style="background-color:green;width:70px;">Finished</button></a>
+                            </td>
+                            {% elif empdetail.position.name == "Project Manager" %}
+                            <td data-label="Finished">
+                                <a href="/ems/proj/finish/{{i.id}}/" onclick="return confirm('Are you sure?');"><button style="background-color:green;width:70px;">Finished</button></a>
+                            </td>
+                            {% endif %}
+                            {% endif %}
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                    {% else %}
+                            <font align="center"><h3>Nothing to show!</h3></font>
+                    {% endif %}
+                </table>
+
+                {% if project.has_other_pages %}
+                <h3>{{ project }}</h3>
+<div class="box1">
+<div class="pagination">
+    <ul>
+        {% if project.has_previous %}
+        <li class="btn prev"><a class="tag" href="?page={{ project.previous_page_number }}"><span><i class="fa fa-angle-left">Previous</i></span></a></li>
+        {% else %}
+        <li class="btn prev disabled"><span><i class="fa fa-angle-left">Previous</i></span></li>
+        {% endif %}
+{% if project.has_next %}
+        <li class="btn next"><a class="tag" href="?page={{ project.next_page_number }}"><span>Next<i class="fa fa-angle-right"></i></span></a></li>
+        {% else %}
+        <li class="btn next disabled"><span>Next<i class="fa fa-angle-right"></i></span></li>
+        {% endif %}
+    </ul>
+</div>
+</div>
+{% endif %}
+            </div>
+</main>
+
+
+{% endblock %}

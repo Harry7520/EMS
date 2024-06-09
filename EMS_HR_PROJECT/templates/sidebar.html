@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <body>
+        <!-- Sidebar -->
+      <aside id="sidebar">
+        <div class="sidebar-title">
+          <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+        </div>
+		
+        {%if userdetail.image %}
+		    <div class="profile">
+                <a href="/ems/profile/create/"><img src="{{ userdetail.image.url }}"></a>
+                <h3>{{ userdetail.name}}</h3>
+                <p>{{ empdetail.position.name }}</p>
+            </div>
+            {% else %}
+            <div class="profile">
+                <a href="/ems/profile/create"><img src="{% static 'images/profile.jpg' %}"></a>
+            </div>
+            {% endif %}
+
+        <div class="menu">
+            <div class="item"><a href="/ems/dashboard"><span class="material-icons-outlined">desktop_windows</span>Dashboard</a></div>
+            {% if empdetail.position.name == "Admin" %}
+            <div class="item"><a class="sub-btn"><span class="material-icons-outlined">groups</span>Employee
+                <!-- dropdown -->
+                <!-- dropdown arrow-->
+                <i class="fas fa-angle-right dropdown"></i>
+                </a>
+                <div class="sub-menu">
+                    <a href="/ems/emp/create" class="sub-item"><span class="material-icons-outlined">person_add</span>Employee Add</a>
+                    <a href="/ems/emp/view" class="sub-item"><span class="material-icons-outlined">people</span>Employee List</a>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if empdetail.position.name == "Manager" %}
+            <div class="item"><a class="sub-btn"><span class="material-icons-outlined">groups</span>Employee
+                <!-- dropdown -->
+                <!-- dropdown arrow-->
+                <i class="fas fa-angle-right dropdown"></i>
+                </a>
+                <div class="sub-menu">
+                    <a href="/ems/emp/create" class="sub-item"><span class="material-icons-outlined">person_add</span>Employee Add</a>
+                    <a href="/ems/emp/view" class="sub-item"><span class="material-icons-outlined">people</span>Employee List</a>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if empdetail.position.name == "Project Manager" %}
+            <div class="item"><a href="/ems/emp/view"><span class="material-icons-outlined">people</span>Employee List</a></div>
+            {% endif %}
+
+            {% if empdetail.position.name == "Admin"%}
+            <div class="item" ><a class="sub-btn"><span class="material-icons-outlined">folder_open</span>Project
+                <!-- dropdown -->
+                <!-- dropdown arrow-->
+                <i class="fas fa-angle-right dropdown"></i>
+                </a>
+                <div class="sub-menu">
+                    <a href="/ems/proj/create" class="sub-item"><span class="material-icons-outlined">note_add</span>Project Add</a>
+                    <a href="/ems/proj/view" class="sub-item"><span class="material-icons-outlined">description</span>Project List</a>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if empdetail.position.name == "Project Manager"%}
+            <div class="item" ><a class="sub-btn"><span class="material-icons-outlined">folder_open</span>Project
+                <!-- dropdown -->
+                <!-- dropdown arrow-->
+                <i class="fas fa-angle-right dropdown"></i>
+                </a>
+                <div class="sub-menu">
+                    <a href="/ems/proj/create" class="sub-item"><span class="material-icons-outlined">note_add</span>Project Add</a>
+                    <a href="/ems/proj/view" class="sub-item"><span class="material-icons-outlined">description</span>Project List</a>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if empdetail.position.name == "Manager" %}
+            <div class="item"><a href="/ems/proj/view"><span class="material-icons-outlined">description</span>Project List</a></div>
+            {% endif %}
+
+            {% if empdetail.position.name == "Developer" %}
+            <div class="item"><a href="/ems/proj/view"><span class="material-icons-outlined">description</span>Project List</a></div>
+            {% endif %}
+
+            {% if empdetail.position.name == "Admin" %}
+            <div class="item"><a href="/ems/res/view"><span class="material-icons-outlined">group_off</span>Resignation List</a></div>
+            <div class="item"><a href="/ems/leave/view"><span class="material-icons-outlined">how_to_vote</span>Leave List</a></div>
+            {% elif empdetail.position.name == "Manager" %}
+            <div class="item"><a href="/ems/res/create"><span class="material-icons-outlined">group_off</span>Resignation</a></div>
+            <div class="item"><a href="/ems/leave/create"><span class="material-icons-outlined">how_to_vote</span>Leave</a></div>
+            {% elif empdetail.position.name == "Project Manager" %}
+            <div class="item"><a href="/ems/res/create"><span class="material-icons-outlined">group_off</span>Resignation</a></div>
+            <div class="item"><a href="/ems/leave/create"><span class="material-icons-outlined">how_to_vote</span>Leave</a></div>
+            {% elif empdetail.position.name == "Developer" %}
+            <div class="item"><a href="/ems/res/create"><span class="material-icons-outlined">group_off</span>Resignation</a></div>
+            <div class="item"><a href="/ems/leave/create"><span class="material-icons-outlined">how_to_vote</span>Leave</a></div>
+            {% endif %}
+
+            {% if empdetail.position.name == "Admin" %}
+            <div class="item"><a href="/ems/mail"><span class="material-icons-outlined">email</span>Mail</a></div>
+            {% elif empdetail.position.name == "Manager" %}
+            <div class="item"><a href="/ems/mail"><span class="material-icons-outlined">email</span>Mail</a></div>
+            {% elif empdetail.position.name == "Developer" %}
+            <div class="item"><a href="/ems/mail"><span class="material-icons-outlined">email</span>Mail</a></div>
+            {% elif empdetail.position.name == "Project Manager" %}
+            <div class="item"><a href="/ems/mail"><span class="material-icons-outlined">email</span>Mail</a></div>
+            {% endif %}
+
+            <div class="item"><a href="/logout"><span class="material-icons-outlined">logout</span>Log Out</a></div>
+
+        </div>
+       </aside>
+      <!-- End Sidebar -->
+    </body>
+</html>

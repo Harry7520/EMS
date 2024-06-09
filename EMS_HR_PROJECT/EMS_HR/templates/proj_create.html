@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %} Admin Dashboard {% endblock %}
+
+{% block body %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style2.css' %}">
+
+<main class="main-container">
+        <div class="box">
+            <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+                <div class="title">
+                    <h2>Project Create</h2>
+                </div>
+                <div class="input-box">
+                    <input type="text" placeholder="Client-Name or Company-Name" name="client" required>
+                </div>
+                <div class="input-box">
+                    <input type="text" placeholder="Project-Name" name="title" required>
+                </div>
+                <div class="input-box">
+                    <input type="text" placeholder="Project-Partner" name="partner" required>
+                </div>
+                <div class="input-box">
+                    <textarea type="text" placeholder="Description" name="description" required style="resize:none;width:60%;height:150px;outline:none;font-size:0.95rem;"></textarea>
+                </div>
+                <div class="input-box">
+                    <lablel>Deadline</lablel><br><br>
+                    <input type="date" name="deadline" id="inputdate2" required>
+                </div>
+                <div class="input-box">
+                    <input type="text" placeholder="Cost" name="cost" required>
+                </div>
+                <div class="but">
+                    <button type="submit" class="btn">Create</button>
+                </div>
+            </form>
+        </div>
+
+        <script type="text/javascript">
+            $(function(){
+                var dtToday = new Date();
+             
+                var month = dtToday.getMonth() + 1;
+                var day = dtToday.getDate();
+                var year = dtToday.getFullYear();
+                if(month < 10)
+                    month = '0' + month.toString();
+                if(day < 10)
+                 day = '0' + day.toString();
+                var maxDate = year + '-' + month + '-' + day;
+                $('#inputdate2').attr('min', maxDate);
+            });
+            </script>
+
+</main>
+
+{% endblock %}

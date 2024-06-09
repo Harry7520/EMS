@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %} Admin Dashboard {% endblock %}
+
+{% block body %}
+
+{% load static %}
+<link rel="stylesheet" href="{%static 'css/style4.css'%}">
+
+<div class="main-container">
+    <div class="box">
+        <div class="box-detail">
+            <div class="image">
+                {% if empcreates.image %}
+                <img src="{{empcreates.image.url}}"/>
+                {% endif %}
+            </div>
+            <div class="detail">
+                <label>Employee ID</label>
+                <p>{{empcreates.id}}</p>
+            </div>
+            <div class="detail">
+                <label>Name</label>
+                <p>{{empcreates.user.username}}</p>
+            </div>
+            <div class="detail">
+                <label>Phone</label>
+                <p>{{empcreates.phone}}</p>
+            </div>
+            <div class="detail">
+                <label>Salary</label>
+                <p>{{empcreates.salary}}</p>
+            </div>
+            <div class="detail">
+                <label>Gender</label>
+                <p>{{empcreates.gender.name}}</p>
+            </div>
+            <div class="detail">
+                <label>Position</label>
+                <p>{{empcreates.position.name}}</p>
+            </div>
+            <div class="detail">
+                <label>Join Date</label>
+                <p>{{empcreates.create_at}}</p>
+            </div>
+            <div class="button">
+                <a href="/ems/emp/view"><button>Go Back</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

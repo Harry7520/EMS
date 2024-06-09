@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %} Dashoboard {% endblock %}
+
+{% block body%}
+
+{% load static %}
+<link rel="stylesheet" href="{%static 'css/style4.css'%}">
+
+<main class="main-container">
+
+    <div class="box">
+        <div class="box-detail">
+            <h3>Project Details</h3><br>
+            <div class="detail">
+                <label>Project-ID</label>
+                <p>{{project.id}}</p>
+            </div>
+            <div class="detail">
+                <label>Client</label>
+                <p>{{project.client}}</p>
+            </div>
+            <div class="detail">
+                <label>Title</label>
+                <p>{{project.title}}</p>
+            </div>
+            <div class="detail">
+                <label>Proj-Partner</label>
+                <p>{{project.partner}}</p>
+            </div>
+            <div class="detail">
+                <label>Description</label>
+                <p>{{project.description}}</p>
+            </div>
+            <div class="detail">
+                <label>Deadline</label>
+                <p>{{project.deadline}}</p>
+            </div>
+            <div class="detail">
+                <label>Cost</label>
+                <p>{{project.cost}}</p>
+            </div>
+            <div class="detail">
+                <label>Status</label>
+                <p>{{project.status}}</p>
+            </div>
+            <div class="detail">
+                <label>Create_Date</label>
+                <p>{{project.create_at}}</p>
+            </div>
+            <div class="button">
+                <a href="/ems/proj/view"><button>Go Back</button></a>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+{% endblock %}

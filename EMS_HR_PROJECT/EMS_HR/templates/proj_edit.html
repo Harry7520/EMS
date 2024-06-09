@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %} Admin Dashboard {% endblock %}
+
+{% block body %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style2.css' %}">
+
+<main class="main-container">
+        <div class="box">
+            <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+                <div class="title">
+                    <h2>Progress Edit</h2>
+                </div>
+                <div class="input-box">
+                    <input type="text" value="{{update.division}}" name="division">
+                </div>
+                <div class="input-box">
+                    <input type="text" value="{{update.progress}}" name="progress">
+                </div>
+                <div class="input-box">
+                    {% if update.image %}
+				    <p>File uploaded at: <a href="{{update.image.url}}">{{update.image}}</a></p>
+			        {% endif %}
+		            {% if update.image %}
+			        <img src={{update.image.url}} style="width:100px;height:100px;"/>
+		            {% endif %}<br><br>
+                    <input type="file" name="image">
+                </div>
+                <div class="but">
+                    <button type="submit" class="btn">Edit</button>
+                </div>
+            </form>
+            <div class="but">
+                <a href="/ems/proj/dev/create/{{project.id}}"><button class="btn">Cancale</button></a>
+            </div>
+        </div>
+</main>
+
+{% endblock %}

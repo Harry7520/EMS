@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %} Admin Dashboard {% endblock %}
+
+{% block body %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style3.css' %}">
+<link rel="stylesheet" href="{% static 'css/paginator.css' %}">
+
+<main class="main-container">
+        <div class="box">
+
+            {% if messages %}
+            {% for message in messages %}
+        <div class="alert {{ message.tags }} ">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <div classs="alert-text">{{ message }}</div>
+          </div>
+        {% endfor %}
+        {% endif %}
+
+                <div class="table-header">
+                    <p>Leave List</p>
+                    <form action="/ems/search_by1">
+                        <input type="search" name="search" placeholder="Name or EMP-Id search" style="height:35px;width:200px;">
+                        <button class="add-new" type="submit">search</button>
+                    </form>
+                </div>
+                {% if leave %}
+                <table class="table">
+                    <thead>
+                        <th>EMP-ID</th>
+                        <th>Name</th>
+                        <th>Start-Date</th>
+                        <th>End-Date</th>
+                        <th>Status</th>
+                        <th>Action</th>    
+                    </thead>
+                    {% for i in leave %}
+                    <tbody>
+                        <tr>
+                            <td data-label="EMP-ID">{{i.empid}}</td>
+                            <td data-label="Name">{{i.name}}</td>
+                            <td data-label="Start-Date">{{i.start_date}}</td>
+                            <td data-label="End-Date">{{i.end_date}}</td>
+                            <td data-label="Status">
+                                {% if i.status == "pending" %}
+                                <a href="/ems/leave/approve/{{i.id}}/" onclick="return confirm('Are you sure?');"><button style="background-color:green;width:70px;">approve</button></a>
+                                <a href="/ems/leave/reject/{{i.id}}/" onclick="return confirm('Are you sure?');"><button style="background-color:red;width:70px;">reject</button></a>
+                                {% elif i.status == "approve" %}
+                                <button class="disabled" style="background-color:green;width:100px;">approve</button>
+                                {% elif i.status == "reject" %}
+                                <button class="disabled" style="background-color:red;width:100px;">reject</button>
+                                {% endif %}
+                            </td>
+                            <td data-label="Action">
+                                <a href="/ems/leave/detail/{{i.id}}/"><button style="background-color:rgb(86, 168, 168)"><i class="fa fa-eye"></i></button></a>
+                                <a href="/ems/leave/delete/{{i.id}}/" onclick="return confirm('Are you sure?');"><button style="background-color:#f80000;"><i class="fa fa-trash-o"></i></button></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                    {% else %}
+                            <font align="center"><h3>Nothing to show!</h3></font>
+                    {% endif %}
+                </table>
+
+                {% if leave.has_other_pages %}
+                <h3>{{ leave }}</h3>
+<div class="box1">
+<div class="pagination">
+    <ul>
+        {% if leave.has_previous %}
+        <li class="btn prev"><a class="tag" href="?page={{ leave.previous_page_number }}"><span><i class="fa fa-angle-left">Previous</i></span></a></li>
+        {% else %}
+        <li class="btn prev disabled"><span><i class="fa fa-angle-left">Previous</i></span></li>
+        {% endif %}
+{% if leave.has_next %}
+        <li class="btn next"><a class="tag" href="?page={{ leave.next_page_number }}"><span>Next<i class="fa fa-angle-right"></i></span></a></li>
+        {% else %}
+        <li class="btn next disabled"><span>Next<i class="fa fa-angle-right"></i></span></li>
+        {% endif %}
+    </ul>
+</div>
+</div>
+{% endif %}
+            </div>
+        </div>
+
+
+</main>
+
+
+{% endblock %}

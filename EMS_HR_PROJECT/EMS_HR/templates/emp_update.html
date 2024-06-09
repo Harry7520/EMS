@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %} Admin Dashboard {% endblock %}
+
+{% block body %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style2.css' %}">
+
+<main class="main-container">
+        <div class="box">
+            <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+                <div class="title">
+                    <h2>Employee Update</h2>
+                </div>
+                <div class="input-box">
+                    <input type="number" value="{{empcreates.phone}}" placeholder="Mobile Number" name="phone">
+                </div>
+                <div class="input-box">
+                    <input type="text" value="{{empcreates.salary}}" placeholder="Salary" name="salary">
+                </div>
+                <div id="select-box">
+                <div class="select-box">
+                    <select name="gender" >
+                        {% for c in gender %}
+                            <option {% if empcreates.gender_id == c.id %}selected{% endif %} value="{{c.id}}">{{c.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                </div>
+                <div id="select-box">
+                <div class="select-box">
+                    <select name="position" >
+                        {% for c in position %}
+			                <option {% if empcreates.position_id == c.id %}selected{% endif %} value="{{c.id}}">{{c.name}}</option>
+		                {% endfor %}
+                    </select>
+                </div>
+                </div>
+                <div class="input-box">
+                    {% if empcreates.image %}
+				    <p>File uploaded at: <a href="{{empcreates.image.url}}">{{empcreates.image}}</a></p>
+			        {% endif %}
+		            {% if empcreates.image %}
+			        <img src={{empcreates.image.url}} style="width:100px;height:100px;"/>
+		            {% endif %}<br><br>
+                    <input type="file" name="image">
+                </div>
+                <div class="but">
+                    <button type="submit" class="btn">Update</button>
+                </div>
+            </form>
+            <div class="but">
+                <a href="/ems/emp/view"><button class="btn">Cancale</button></a>
+            </div>
+        </div>
+</main>
+
+{% endblock %}

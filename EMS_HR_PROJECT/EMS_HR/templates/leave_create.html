@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %} Admin Dashboard {% endblock %}
+
+{% block body %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style2.css' %}">
+<link rel="stylesheet" href="{% static 'css/style6.css' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<main class="main-container">
+        <div class="box">
+
+            {% if messages %}
+            {% for message in messages %}
+        <div class="alert {{ message.tags }} ">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <div classs="alert-text">{{ message }}</div>
+          </div>
+        {% endfor %}
+        {% endif %}
+
+            <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+                <div class="title">
+                    <h2>Leave Report</h2>
+                </div>
+                <div class="input-box">
+                    <input type="number" placeholder="ID" name="empid" required>
+                </div>
+                <div class="input-box">
+                    <input type="text" placeholder="name" name="name" required>
+                </div>
+                <div class="input-box">
+                    <lablel>Start-Date</lablel><br><br>
+                    <input type="date" name="start_date" id="inputdate" required>
+                </div>
+                <div class="input-box">
+                    <lablel>End-Date</lablel><br><br>
+                    <input type="date" name="end_date" id="inputdate1" required>
+                </div>
+                <div class="input-box">
+                    <textarea type="text" placeholder="Reason" name="description" required style="resize:none;width:60%;height:150px;outline:none;font-size:0.95rem;"></textarea>
+                </div>
+                <div class="but">
+                    <button type="submit" class="btn">Report</button>
+                </div>
+            </form>
+        </div><br><br>
+
+        <div class="box2" id="leave">
+            <div class="table-header">
+                <p>Your Leave-report List</p>
+            </div>
+            
+            <table class="table">
+                <thead>
+                    <th>EMP-ID</th>
+                    <th>Name</th>
+                    <th>Reason</th>
+                    <th>Start-Date</th>
+                    <th>End-Date</th>
+                    <th>Action</th>    
+                </thead>
+                {% for i in leave %}
+                {% if i.author_id == user.id %}
+                <tbody>
+                    <tr>
+                        <td data-label="EMP-ID">{{i.empid}}</td>
+                        <td data-label="Name">{{i.name}}</td>
+                        <td data-label="Reason">{{i.description}}</td>
+                        <td data-label="Start-Date">{{i.start_date}}</td>
+                        <td data-label="End-Date">{{i.end_date}}</td>
+                        {% if i.status == "pending" %}
+                        <td data-label="Action" style="background-color: #17a2b8;"><font color="#fff">{{i.status}}</font></td>
+                        {% elif i.status == "approve" %}
+                        <td data-label="Action" style="background-color: green;"><font color="#fff">{{i.status}}</font></td>
+                        {% elif i.status == "reject" %}
+                        <td data-label="Action" style="background-color: red;"><font color="#fff">{{i.status}}</font></td>
+                        {% endif %}
+                    </tr>
+                </tbody>
+                {% endif %}
+                {% endfor %}
+            </table>
+
+        </div>
+
+
+        <script type="text/javascript">
+            $(function(){
+                var dtToday = new Date();
+             
+                var month = dtToday.getMonth() + 1;
+                var day = dtToday.getDate();
+                var year = dtToday.getFullYear();
+                if(month < 10)
+                    month = '0' + month.toString();
+                if(day < 10)
+                 day = '0' + day.toString();
+                var maxDate = year + '-' + month + '-' + day;
+                $('#inputdate').attr('min', maxDate);
+            });
+            </script>
+
+<script type="text/javascript">
+    $(function(){
+        var dtToday = new Date();
+     
+        var month = dtToday.getMonth() + 1;
+        var day = dtToday.getDate();
+        var year = dtToday.getFullYear();
+        if(month < 10)
+            month = '0' + month.toString();
+        if(day < 10)
+         day = '0' + day.toString();
+        var maxDate = year + '-' + month + '-' + day;
+        $('#inputdate1').attr('min', maxDate);
+    });
+    </script>
+</main>
+
+{% endblock %}
